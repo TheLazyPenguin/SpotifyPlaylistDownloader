@@ -3,15 +3,20 @@ import sys
 from spotipy import util
 import json
 import config as cg
+Track_name=[]
+Artist_name=[]
+Album_name=[]
+Image_links=[]
+Release_date=[]
 def editPlaylist(results):
     for i in range(46):
-        del results['items'][i]['added_at']
-        del results['items'][i]['added_by']
-        del results['items'][i]['is_local']
-        del results['items'][i]['primary_color']
-        del results['items'][i]['track']['album']['available_markets']
-        del results['items'][i]['track']['album']['href']
-        del results['items'][i]['track']['album']['id']
+        Album_name.append(results['items'][i]['track']['album']['name'])
+        Artist_name.append(results['items'][i]['track']['album']['artists'][0]['name'])
+        Track_name.append(results['items'][i]['track']['name'])
+        Image_links.append(results['items'][i]['track']['album']['images'][0]['url'])
+        Release_date.append(results['items'][i]['track']['album']['release_date'])
+
+
 
     file = open("Playlist.json", "w")
     jsonarray = json.dumps(results, indent=4, sort_keys=True)
