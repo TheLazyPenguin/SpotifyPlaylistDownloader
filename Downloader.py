@@ -1,17 +1,14 @@
 from SpotifyWebAPI import Track_name,Album_name,Artist_name,Image_links,Release_date,num,Track_length
-from selenium import webdriver
 from webbot import Browser
-import webbot.drivers as wb
-import driver_builder
 import time
 from mutagen.mp3 import MP3
 import os
 from winreg import *
-#TODO Make downloading work with headless chrome
 with OpenKey(HKEY_CURRENT_USER, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
     downloadir = QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]
+print(str(num) + ' Songs')
 web = Browser(showWindow=False)
-print(driver_builder.DriverBuilder._get_chrome_driver(self= driver_builder.DriverBuilder,download_location=downloadir,headless=False))
+web.enable_download_in_headless_chrome()
 def youtube(num):
     for i in range(num):
         web.go_to('mp3juices.cc')
@@ -19,7 +16,8 @@ def youtube(num):
         web.type(str(Track_name[i]) + ' ' + str(Artist_name[i] + ' ' + 'audio'))
         web.press(web.Key.ENTER)
         web.click("Download")
-        time.sleep(4)
+        #Leave time to download
+        time.sleep(10)
         web.click(classname="url")
         print(str(round((i/num)*100,2)) + '%...')
     print("Finished")

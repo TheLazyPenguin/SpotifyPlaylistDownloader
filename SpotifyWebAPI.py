@@ -1,5 +1,4 @@
 import spotipy
-import sys
 from spotipy import util
 import json
 import config as cg
@@ -9,8 +8,8 @@ Album_name=[]
 Image_links=[]
 Release_date=[]
 Track_length=[]
-num=46
-def editPlaylist(results,num):
+def editPlaylist(results):
+    num = results['total']
     for i in range(num):
         Album_name.append(results['items'][i]['track']['album']['name'])
         Artist_name.append(results['items'][i]['track']['album']['artists'][0]['name'])
@@ -18,7 +17,7 @@ def editPlaylist(results,num):
         Image_links.append(results['items'][i]['track']['album']['images'][0]['url'])
         Release_date.append(results['items'][i]['track']['album']['release_date'])
         Track_length.append(results['items'][i]['track']['duration_ms'])
-
+    return num
 
 
     file = open("Playlist.json", "w")
@@ -30,5 +29,5 @@ token = util.prompt_for_user_token(username=cg.username,scope="playlist-read-col
 if token:
     sp = spotipy.Spotify(auth=token)
     results = sp.user_playlist_tracks(playlist_id=Playlist_ID,limit=100,offset=0,user=cg.username)
-    editPlaylist(results,num)
+    num = editPlaylist(results)
 
