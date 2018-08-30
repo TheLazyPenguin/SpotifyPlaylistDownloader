@@ -1,7 +1,6 @@
 import spotipy
-from spotipy import util
+import webbrowser
 import json
-import config as cg
 Track_name=[]
 Artist_name=[]
 Album_name=[]
@@ -24,10 +23,15 @@ def editPlaylist(results):
     jsonarray = json.dumps(results, indent=4, sort_keys=True)
     file.write(jsonarray)
     file.close
-Playlist_ID= input("What is ID? ")
-token = util.prompt_for_user_token(username=cg.username,scope="playlist-read-collaborative",client_id=cg.client_id,client_secret=cg.client_secret,redirect_uri=cg.redirect_uri)
+Playlist_ID= input("What is Playlist ID? ")
+webbrowser.open("https://accounts.spotify.com/authorize?client_id=eaa2b856a56a495699ac28193ea694fa&redirect_uri=https://localhost&scope=playlist-read-collaborative&response_type=token&state=123")
+token = input("Paste link shown after logging in ")
+username = input("Input Spotify Username")
+token,foo,floo,fla = token.split("&")
+foo,token = token.split("=")
+del foo,floo,fla
 if token:
     sp = spotipy.Spotify(auth=token)
-    results = sp.user_playlist_tracks(playlist_id=Playlist_ID,limit=100,offset=0,user=cg.username)
+    results = sp.user_playlist_tracks(playlist_id=Playlist_ID,limit=100,offset=0,user=username)
     num = editPlaylist(results)
 
