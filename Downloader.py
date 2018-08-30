@@ -17,7 +17,7 @@ def youtube(num):
         web.press(web.Key.ENTER)
         web.click("Download")
         #Leave time to download
-        time.sleep(15)
+        time.sleep(20)
         web.click(classname="url")
         print(str(round((i/num)*100,2)) + '%...')
     print("Finished")
