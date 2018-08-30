@@ -8,13 +8,16 @@ Artist_name=[]
 Album_name=[]
 Image_links=[]
 Release_date=[]
-def editPlaylist(results):
-    for i in range(46):
+Track_length=[]
+num=46
+def editPlaylist(results,num):
+    for i in range(num):
         Album_name.append(results['items'][i]['track']['album']['name'])
         Artist_name.append(results['items'][i]['track']['album']['artists'][0]['name'])
         Track_name.append(results['items'][i]['track']['name'])
         Image_links.append(results['items'][i]['track']['album']['images'][0]['url'])
         Release_date.append(results['items'][i]['track']['album']['release_date'])
+        Track_length.append(results['items'][i]['track']['duration_ms'])
 
 
 
@@ -27,5 +30,5 @@ token = util.prompt_for_user_token(username=cg.username,scope="playlist-read-col
 if token:
     sp = spotipy.Spotify(auth=token)
     results = sp.user_playlist_tracks(playlist_id=Playlist_ID,limit=100,offset=0,user=cg.username)
-    editPlaylist(results)
+    editPlaylist(results,num)
 
