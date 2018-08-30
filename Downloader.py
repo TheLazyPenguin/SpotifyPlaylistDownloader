@@ -17,14 +17,14 @@ def youtube(num):
         web.press(web.Key.ENTER)
         web.click("Download")
         #Leave time to download
-        time.sleep(10)
+        time.sleep(15)
         web.click(classname="url")
         print(str(round((i/num)*100,2)) + '%...')
     print("Finished")
     create_folder()
 def create_folder():
     try:
-        os.mkdir(r'C:\Users\Lazyw\Music\SpotifyPlaylist')
+        os.mkdir('C:\\Users\\' +os.getlogin()+ '\\Music\\SpotifyPlaylist')
 
         print("Put music files into SpotifyPlaylist folder")
     except FileExistsError:
@@ -42,7 +42,7 @@ def metadata_check():
             print('hello')
         audiofile["title"] = Track_name[i]
 
-if input("download(1) or fix metadata(2)") == '1':
+if input("Download(1) or fix MetaData(2)") == '1':
     youtube(num)
 else:
     metadata_check()
